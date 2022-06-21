@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Platform Biz Test WEB</title>
+
+<link rel="stylesheet" href="./bootstrap.css" media="screen">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script> 
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+
+<script type="text/javascript">
+$(function(){
+	$("#info").click(function(){
+		writeLog('info')
+	})
+	$("#warn").click(function(){
+		writeLog('warn')
+	})
+	$("#error").click(function(){
+		writeLog('error')
+	})
+	$("#start").click(function(){
+		startWorker();
+	})
+	$("#stop").click(function(){
+		stopWorker();
+	})
+})
+
+function writeLog(type){  
+	$.ajax({         
+	    method : "GET",
+	    url : "/write_log/"+type,
+	    error : function(){
+	        console.log("Failure");
+	    },
+	    success : function(data){
+	        console.log("Success");
+	        console.log(data);
+	    }	     
+	});
+}
+ 
+var w;
+
+function startWorker() {
+    if(typeof(Worker) !== "undefined") {
+        if(typeof(w) == "undefined") {
+            w = new Worker("workers.js");
+        }
+        w.onmessage = function(event) {
+            //document.getElementById("result").innerHTML = event.data;
+            writeLog('toggle');
+        };
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Workers...";
+    }
+}
+
+function stopWorker() { 
+    w.terminate();
+    w = undefined;
+}
+
+</script>
+
+</head>
+<body>
+<div class="col-sm-4">
+  <h1 id="module_name" class="display-3" th:text="${module_name}"></h1>
+  <p class="lead">This is a deom web page to save logs.</p>
+  <hr class="my-4">
+  <p class="lead">
+    <br><br>
+	<button id="info" type="button" class="btn btn-info">Info</button>&nbsp;
+	<button id="warn" type="button" class="btn btn-warning">Warning</button>&nbsp;
+	<button id="error" type="button" class="btn btn-danger">ERROR</button><br>
+	<br>
+	<button type="button" onclick="startWorker()" class="btn btn-outline-success">Start Worker</button>
+	<button type="button" onclick="stopWorker()" class="btn btn-outline-danger">Stop Worker</button>
+  </p>
+</div>
+
+</body>
+</html>
