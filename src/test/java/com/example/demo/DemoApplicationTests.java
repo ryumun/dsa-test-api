@@ -11,13 +11,9 @@ import com.example.demo.controller.LogController;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoApplicationTests {
-	
-	@Autowired
-	LogController log;
 
 	@Test
 	public void contextLoads() {
-		//log.test();
 	}
 
 }
