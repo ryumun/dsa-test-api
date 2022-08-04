@@ -65,7 +65,7 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
-                    <destFile>${project.basedir}/../target/site/jacoco/jacoco.xml</destFile>
+                    <destFile>${project.basedir}/../target/reports/jacoco.xml</destFile>
                     <append>true</append>
                 </configuration>
                 <executions>
