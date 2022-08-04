@@ -17,7 +17,7 @@ public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		log.test();
+		//log.test();
 	}
 
 }
